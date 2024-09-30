@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
 @Controller
-@RequestMapping("/items")
+@RequestMapping("/payment/items")
 class ItemController(private val itemService: ItemService,
                      private val orderService: OrderService) {
     @GetMapping

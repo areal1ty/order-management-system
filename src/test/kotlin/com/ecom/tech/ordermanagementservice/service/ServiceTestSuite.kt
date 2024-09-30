@@ -8,7 +8,8 @@ import org.junit.platform.suite.api.Suite
 @SelectClasses(
     DeliveryServiceTest::class,
     ItemServiceTest::class,
-    PaymentServiceTest::class
+    PaymentServiceTest::class,
+    OrderServiceTest::class
 )
 @IncludeClassNamePatterns(".*Test")
 class ServiceTestSuite

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
 @Controller
-@RequestMapping("/orders")
+@RequestMapping("/public/orders")
 class OrderController(private val orderService: OrderService) {
     @GetMapping
     fun getAllOrders(): ResponseEntity<List<OrderDTO>> = ResponseEntity.ok(orderService.getAllOrders())
