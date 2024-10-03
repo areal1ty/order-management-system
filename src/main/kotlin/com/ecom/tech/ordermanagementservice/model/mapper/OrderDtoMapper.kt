@@ -1,50 +1,36 @@
 package com.ecom.tech.ordermanagementservice.model.mapper
 
 import com.ecom.tech.ordermanagementservice.model.dto.OrderDTO
-import com.ecom.tech.ordermanagementservice.model.entity.Item
 import com.ecom.tech.ordermanagementservice.model.entity.Order
+import com.ecom.tech.ordermanagementservice.model.entity.status.OrderStatus
+import java.time.LocalDateTime
 
 object OrderDtoMapper {
     fun toEntity(orderDto: OrderDTO): Order {
         return Order(
-            orderUid = orderDto.orderUid,
+            orderId = orderDto.orderId,
             trackNumber = orderDto.trackNumber,
             entry = orderDto.entry,
             delivery = DeliveryDtoMapper.toEntity(orderDto.delivery),
             payment = PaymentDtoMapper.toEntity(orderDto.payment),
-            items = orderDto.items.map { itemDto ->
-                Item(
-                    id = itemDto.id,
-                    chrtId = itemDto.chrtId,
-                    trackNumber = itemDto.trackNumber,
-                    price = itemDto.price,
-                    rid = itemDto.rid,
-                    name = itemDto.name,
-                    sale = itemDto.sale,
-                    size = itemDto.size,
-                    totalPrice = itemDto.totalPrice,
-                    nmId = itemDto.nmId,
-                    brand = itemDto.brand,
-                    order = null
-                )
-            },
+            items = orderDto.items.map { ItemDtoMapper.toEntity(it) },
             deliveryService = orderDto.deliveryService,
-            dateCreated = orderDto.dateCreated,
-            status = orderDto.status
+            dateCreated = LocalDateTime.parse(orderDto.dateCreated),
+            status = OrderStatus.valueOf(orderDto.status)
         )
     }
 
     fun toDto(order: Order): OrderDTO {
         return OrderDTO(
-            orderUid = order.orderUid,
+            orderId = order.orderId,
             trackNumber = order.trackNumber,
             entry = order.entry,
             delivery = DeliveryDtoMapper.toDto(order.delivery),
             payment = PaymentDtoMapper.toDto(order.payment),
             items = order.items.map { ItemDtoMapper.toDto(it) },
             deliveryService = order.deliveryService,
-            dateCreated = order.dateCreated,
-            status = order.status
+            dateCreated = order.dateCreated.toString(),
+            status = order.status.name
         )
     }
 }

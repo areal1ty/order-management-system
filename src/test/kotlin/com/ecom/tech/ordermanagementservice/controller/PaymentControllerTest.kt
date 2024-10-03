@@ -16,12 +16,16 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import java.time.LocalDateTime
 
 @WebMvcTest(PaymentController::class)
 class PaymentControllerTest {
 
     @Autowired
     private lateinit var mockMvc: MockMvc
+
+    @MockBean
+    private lateinit var paymentController: PaymentController
 
     @MockBean
     private lateinit var paymentService: PaymentService
@@ -34,23 +38,26 @@ class PaymentControllerTest {
     @BeforeEach
     fun setUp() {
         samplePaymentDto = PaymentDTO(
-            transaction = "TestTransaction",
+            id = 1L,
+            transaction = "TestTransaction123",
             currency = "USD",
             provider = "TestProvider",
             amount = 500,
-            paymentDt = 123456789L,
+            paymentDt = LocalDateTime.of(2024, 9, 31, 21, 12, 32, 32),
             bank = "TestBank",
             deliveryCost = 50,
             goodsTotal = 450,
             customFee = 0,
-            status = PaymentStatus.NEW
+            status = "NEW"
         )
+        paymentController.createPayment(samplePaymentDto)
+
     }
 
     @Test
     fun `createPayment should return 200 OK and PaymentDTO`() {
         mockMvc.perform(
-            post("/payment")
+            post("/public/payment")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(samplePaymentDto))
         )
@@ -65,7 +72,7 @@ class PaymentControllerTest {
     fun `getPaymentById should return 200 OK and PaymentDTO`() {
         `when`(paymentService.getPaymentById(1L)).thenReturn(samplePaymentDto)
 
-        mockMvc.perform(get("/payment/1"))
+        mockMvc.perform(get("/public/payment/1"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.transaction").value("TestTransaction"))
@@ -79,7 +86,7 @@ class PaymentControllerTest {
         `when`(paymentService.updatePayment(1L, samplePaymentDto)).thenReturn(updatedPaymentDto)
 
         mockMvc.perform(
-            put("/payment/1")
+            put("/public/payment/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(samplePaymentDto))
         )
@@ -106,7 +113,7 @@ class PaymentControllerTest {
     fun `deletePayment should return 204 No Content`() {
         doNothing().`when`(paymentService).deletePayment(1L)
 
-        mockMvc.perform(delete("/payment/1"))
+        mockMvc.perform(delete("/public/payment/1"))
             .andExpect(status().isNoContent)
     }
 }

@@ -11,7 +11,7 @@ VALUES
     (9, 'WBILMTESTTRACK9', 'WBIL', now(), 'en', 'cust_9', 'meest', 1, 91, 1),
     (10, 'WBILMTESTTRACK10', 'WBIL', now(), 'ru', 'cust_10', 'dhl', 10, 90, 2);
 
-INSERT INTO payments (payment_id, transaction, currency, provider, amount, payment_dt, bank, delivery_cost, goods_total, custom_fee, order_id)
+INSERT INTO payment (payment_id, transaction, currency, provider, amount, payment_dt, bank, delivery_cost, goods_total, custom_fee, order_id)
 VALUES
     (1, 'trans_1', 'USD', 'wbpay', 1000, now(), 'alpha', 150, 850, 0, 1),
     (2, 'trans_2', 'EUR', 'paypal', 2000, now(), 'beta', 200, 1800, 0, 2),
@@ -24,7 +24,7 @@ VALUES
     (9, 'trans_9', 'EUR', 'paypal', 4000, now(), 'alpha', 400, 3600, 0, 9),
     (10, 'trans_10', 'USD', 'wbpay', 900, now(), 'beta', 90, 810, 0, 10);
 
-INSERT INTO deliveries (delivery_id, name, phone, zip, city, address, region, email, order_id)
+INSERT INTO delivery (delivery_id, name, phone, zip, city, address, region, email, order_id)
 VALUES
     (1, 'Ivan Ivanov', '+79150000000', '123456', 'Moscow', 'Lenina st. 1', 'Moscow Region', 'ivanov@gmail.com', 1),
     (2, 'Petr Petrov', '+79260000000', '654321', 'Saint Petersburg', 'Nevsky st. 10', 'Leningrad Region', 'petrov@gmail.com', 2),

@@ -27,7 +27,7 @@ class ItemService(private val itemRepo: ItemRepository, private val orderService
     }
 
     fun createItem(itemDto: ItemDTO, order: Order): ItemDTO {
-        val itemEntity = ItemDtoMapper.toEntity(itemDto, order)
+        val itemEntity = ItemDtoMapper.toEntity(itemDto)
         logger.info { "Saving new Item..." }
         return ItemDtoMapper.toDto(itemRepo.save(itemEntity))
     }
@@ -53,7 +53,7 @@ class ItemService(private val itemRepo: ItemRepository, private val orderService
 
         val order = item.order
         logger.info { "Validating if Item can be deleted from Order..." }
-        orderService.validateOrderForItemDeletion(order!!.orderUid)
+        orderService.validateOrderForItemDeletion(order!!.orderId)
 
         logger.info { "Order validated, deleting Item from Order..." }
         itemRepo.deleteById(id)

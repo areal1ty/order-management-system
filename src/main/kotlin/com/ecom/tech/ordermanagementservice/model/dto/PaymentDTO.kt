@@ -1,16 +1,17 @@
 package com.ecom.tech.ordermanagementservice.model.dto
 
-import com.ecom.tech.ordermanagementservice.model.entity.status.PaymentStatus
+import java.time.LocalDateTime
 
 data class PaymentDTO (
-    var transaction: String,
-    var currency: String,
-    var provider: String,
-    var amount: Int,
-    var paymentDt: Long,
-    var bank: String,
-    var deliveryCost: Int,
-    var goodsTotal: Int,
-    var customFee: Int,
-    var status: PaymentStatus
+    val id: Long,
+    val transaction: String,
+    val currency: String,
+    val provider: String,
+    val amount: Int,
+    val paymentDt: LocalDateTime,
+    val bank: String,
+    val deliveryCost: Int,
+    val goodsTotal: Int,
+    val customFee: Int,
+    val status: String
 )

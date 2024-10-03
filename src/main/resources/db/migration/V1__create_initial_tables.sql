@@ -1,20 +1,16 @@
 CREATE TABLE orders
 (
-    order_id         BIGINT PRIMARY KEY,
+    order_id         BIGINT PRIMARY KEY AUTO_INCREMENT,
     track_number     VARCHAR(255),
     entry            VARCHAR(255),
     date_created     TIMESTAMP,
-    locale           VARCHAR(10),
-    customer_id      VARCHAR(255),
     delivery_service VARCHAR(255),
-    shardkey         INT,
-    sm_id            INT,
-    oof_shard        INT
+    status           VARCHAR(255) DEFAULT 'NEW'
 );
 
 CREATE TABLE payment
 (
-    payment_id    BIGINT PRIMARY KEY,
+    payment_id    BIGINT PRIMARY KEY AUTO_INCREMENT,
     transaction   VARCHAR(255),
     currency      VARCHAR(3),
     provider      VARCHAR(255),
@@ -25,12 +21,13 @@ CREATE TABLE payment
     goods_total   INT,
     custom_fee    INT,
     order_id      BIGINT,
-    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES orders (order_id)
+    status        VARCHAR(255) DEFAULT 'NEW',
+    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE CASCADE
 );
 
 CREATE TABLE delivery
 (
-    delivery_id BIGINT PRIMARY KEY,
+    delivery_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name        VARCHAR(255),
     phone       VARCHAR(20),
     zip         VARCHAR(10),
@@ -39,12 +36,12 @@ CREATE TABLE delivery
     region      VARCHAR(255),
     email       VARCHAR(255),
     order_id    BIGINT,
-    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES orders (order_id)
+    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE CASCADE
 );
 
 CREATE TABLE items
 (
-    item_id      BIGINT PRIMARY KEY,
+    item_id      BIGINT PRIMARY KEY AUTO_INCREMENT,
     chrt_id      INT,
     track_number VARCHAR(255),
     price        INT,
@@ -57,5 +54,5 @@ CREATE TABLE items
     brand        VARCHAR(255),
     status       INT,
     order_id     BIGINT,
-    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES orders (order_id)
+    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE CASCADE
 );

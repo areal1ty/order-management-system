@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
 @Controller
-@RequestMapping("/payment/items")
+@RequestMapping("/payment/item")
 class ItemController(private val itemService: ItemService,
                      private val orderService: OrderService) {
     @GetMapping
@@ -21,7 +21,7 @@ class ItemController(private val itemService: ItemService,
 
     @PostMapping
     fun createItem(@RequestBody itemDto: ItemDTO): ResponseEntity<ItemDTO> {
-        val orderDto = orderService.getOrderById(itemDto.orderUid)
+        val orderDto = orderService.getOrderById(itemDto.orderId!!)
         return ResponseEntity.ok(itemService.createItem(itemDto, OrderDtoMapper.toEntity(orderDto)))
     }
 

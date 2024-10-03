@@ -2,10 +2,9 @@ package com.ecom.tech.ordermanagementservice.model.mapper
 
 import com.ecom.tech.ordermanagementservice.model.dto.ItemDTO
 import com.ecom.tech.ordermanagementservice.model.entity.Item
-import com.ecom.tech.ordermanagementservice.model.entity.Order
 
 object ItemDtoMapper {
-    fun toEntity(itemDto: ItemDTO, order: Order): Item {
+    fun toEntity(itemDto: ItemDTO): Item {
         return Item(
             id = itemDto.id,
             chrtId = itemDto.chrtId,
@@ -18,7 +17,8 @@ object ItemDtoMapper {
             totalPrice = itemDto.totalPrice,
             nmId = itemDto.nmId,
             brand = itemDto.brand,
-            order = order
+            status = itemDto.status.toInt(),
+            order = null
         )
     }
     fun toDto(item: Item): ItemDTO {
@@ -34,7 +34,8 @@ object ItemDtoMapper {
             totalPrice = item.totalPrice,
             nmId = item.nmId,
             brand = item.brand,
-            orderUid = item.order!!.orderUid
+            status = item.status.toString(),
+            orderId = item.order?.orderId
         )
     }
 }

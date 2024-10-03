@@ -2,13 +2,15 @@ package com.ecom.tech.ordermanagementservice.model.entity
 
 import com.ecom.tech.ordermanagementservice.model.entity.status.OrderStatus
 import jakarta.persistence.*
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "orders")
 data class Order(
     @Id
-    @Column(name = "order_uid")
-    var orderUid: String,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
+    var orderId: Long,
 
     @Column(name = "track_number")
     var trackNumber: String,
@@ -16,23 +18,22 @@ data class Order(
     @Column(name = "entry")
     var entry: String,
 
-    @OneToOne(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    @JoinColumn(name = "delivery_id")
+    @OneToOne(mappedBy = "order", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     var delivery: Delivery,
 
-    @OneToOne(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    @JoinColumn(name = "payment_id")
+    @OneToOne(mappedBy = "order", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     var payment: Payment,
 
-    @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     var items: List<Item>,
 
     @Column(name = "delivery_service")
     var deliveryService: String,
 
     @Column(name = "date_created")
-    var dateCreated: String,
+    var dateCreated: LocalDateTime,
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    var status: OrderStatus
+    var status: OrderStatus = OrderStatus.NEW
 )

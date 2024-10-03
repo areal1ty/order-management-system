@@ -32,13 +32,14 @@ class DeliveryControllerTest {
     @BeforeEach
     fun setUp() {
         sampleDeliveryDto = DeliveryDTO(
-            name = "Test Delivery",
-            phone = "1234567890",
-            city = "Test City",
-            address = "Test Address",
-            region = "Test Region",
+            id = 1L,
+            name = "John Doe",
+            phone = "123-456-7890",
             zip = "12345",
-            email = "test@example.com"
+            city = "New York",
+            address = "123 Test St.",
+            region = "NY",
+            email = "john.doe@example.com"
         )
     }
 

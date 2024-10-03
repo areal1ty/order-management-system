@@ -12,7 +12,8 @@ object DeliveryDtoMapper {
             city = deliveryDto.city,
             address = deliveryDto.address,
             region = deliveryDto.region,
-            email = deliveryDto.email
+            email = deliveryDto.email,
+            order = deliveryDto.order
         )
     }
 
@@ -25,6 +26,7 @@ object DeliveryDtoMapper {
             address = delivery.address,
             region = delivery.region,
             email = delivery.email
+            order = delivery.order
         )
     }
 

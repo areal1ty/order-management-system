@@ -18,7 +18,7 @@ class OrderService(private val orderRepo: OrderRepository) {
         return orderRepo.findAll().map { OrderDtoMapper.toDto(it) }
     }
 
-    fun getOrderById(orderUid: String): OrderDTO {
+    fun getOrderById(orderUid: Long): OrderDTO {
         logger.info { "Getting Order with ID $orderUid" }
         val order = orderRepo.findById(orderUid)
             .orElseThrow { IllegalArgumentException("Order with ID $orderUid not found") }
@@ -32,18 +32,18 @@ class OrderService(private val orderRepo: OrderRepository) {
         return OrderDtoMapper.toDto(orderRepo.save(orderEntity))
     }
 
-    fun updateOrder(orderUid: String, orderDto: OrderDTO): OrderDTO {
+    fun updateOrder(orderUid: Long, orderDto: OrderDTO): OrderDTO {
         logger.info { "Looking for Order with ID $orderUid to update..."}
         val existingOrder = orderRepo.findById(orderUid)
             .orElseThrow { IllegalArgumentException("Order with ID $orderUid not found") }
 
         val updatedOrder = OrderDtoMapper.toEntity(orderDto)
-        updatedOrder.orderUid = existingOrder.orderUid
+        updatedOrder.orderId = existingOrder.orderId
         logger.info { "Updating Order with ID $orderUid..." }
         return OrderDtoMapper.toDto(orderRepo.save(updatedOrder))
     }
 
-    fun deleteOrder(orderUid: String) {
+    fun deleteOrder(orderUid: Long) {
         logger.info { "Looking for Order with ID $orderUid to delete..." }
         val existingOrder = orderRepo.findById(orderUid)
             .orElseThrow { IllegalArgumentException("Order with ID $orderUid not found") }
@@ -53,7 +53,7 @@ class OrderService(private val orderRepo: OrderRepository) {
     }
 
     @Transactional(readOnly = true)
-    fun canDeleteItemFromOrder(orderId: String): Boolean {
+    fun canDeleteItemFromOrder(orderId: Long): Boolean {
         val order = orderRepo.findById(orderId)
             .orElseThrow { IllegalArgumentException("Order with ID $orderId not found") }
 
@@ -65,7 +65,7 @@ class OrderService(private val orderRepo: OrderRepository) {
     }
 
     @Transactional
-    fun validateOrderForItemDeletion(orderId: String) {
+    fun validateOrderForItemDeletion(orderId: Long) {
         if (!canDeleteItemFromOrder(orderId)) {
             throw OrderModificationException("Cannot delete item from Order with ID $orderId because the order is not in an active state.")
         }

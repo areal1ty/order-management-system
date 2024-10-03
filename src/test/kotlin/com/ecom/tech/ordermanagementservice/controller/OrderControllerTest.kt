@@ -1,10 +1,9 @@
 package com.ecom.tech.ordermanagementservice.controller
 
 import com.ecom.tech.ordermanagementservice.model.dto.DeliveryDTO
+import com.ecom.tech.ordermanagementservice.model.dto.ItemDTO
 import com.ecom.tech.ordermanagementservice.model.dto.OrderDTO
 import com.ecom.tech.ordermanagementservice.model.dto.PaymentDTO
-import com.ecom.tech.ordermanagementservice.model.entity.status.OrderStatus
-import com.ecom.tech.ordermanagementservice.model.entity.status.PaymentStatus
 import com.ecom.tech.ordermanagementservice.service.OrderService
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
@@ -19,6 +18,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import java.time.LocalDateTime
 
 @WebMvcTest(OrderController::class)
 class OrderControllerTest {
@@ -29,6 +29,9 @@ class OrderControllerTest {
     @MockBean
     private lateinit var orderService: OrderService
 
+    @MockBean
+    private lateinit var orderController: OrderController
+
     @Autowired
     private lateinit var objectMapper: ObjectMapper
 
@@ -37,27 +40,54 @@ class OrderControllerTest {
     @BeforeEach
     fun setUp() {
         sampleOrderDto = OrderDTO(
-            orderUid = "sample-order-uid",
-            trackNumber = "123456789",
-            entry = "Sample Entry",
-            delivery = DeliveryDTO("Test Delivery", "123", "Test City", "Test Address", "Region", "Zip", "Email"),
+            orderId = 123452163821637821,
+            trackNumber = "TRK-ORDER12345",
+            entry = "SampleEntry",
+            delivery = DeliveryDTO(
+                id = 1L,
+                name = "John Doe",
+                phone = "123-456-7890",
+                zip = "12345",
+                city = "New York",
+                address = "123 Test St.",
+                region = "NY",
+                email = "john.doe@example.com"
+            ),
             payment = PaymentDTO(
-                transaction = "TestTransaction",
+                id = 1L,
+                transaction = "TestTransaction123",
                 currency = "USD",
                 provider = "TestProvider",
                 amount = 500,
-                paymentDt = 123456789L,
+                paymentDt = LocalDateTime.of(2024, 9, 31, 21, 12, 32, 32),
                 bank = "TestBank",
                 deliveryCost = 50,
                 goodsTotal = 450,
                 customFee = 0,
-                status = PaymentStatus.NEW
+                status = "NEW"
             ),
-            items = listOf(),
-            deliveryService = "Sample Delivery Service",
-            dateCreated = "2023-12-01",
-            status = OrderStatus.NEW
+            items = listOf(
+                ItemDTO(
+                id = 1L,
+                chrtId = 123,
+                trackNumber = "TRK12345678",
+                price = 100,
+                rid = "RID12345",
+                name = "Test Item",
+                sale = 10,
+                size = "M",
+                totalPrice = 90,
+                nmId = 456,
+                brand = "Test Brand",
+                status = "NEW",
+                orderId = 1L
+            )
+            ),
+            deliveryService = "UPS",
+            dateCreated = "2024-10-01T10:15:30",
+            status = "NEW"
         )
+        orderController.createOrder(sampleOrderDto)
     }
 
     @Test

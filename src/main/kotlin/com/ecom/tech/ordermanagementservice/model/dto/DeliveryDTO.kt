@@ -1,11 +1,12 @@
 package com.ecom.tech.ordermanagementservice.model.dto
 
 data class DeliveryDTO(
-    var name: String,
-    var phone: String,
-    var zip: String,
-    var city: String,
-    var address: String,
-    var region: String,
-    var email: String
+    val id: Long,
+    val name: String,
+    val phone: String,
+    val zip: String,
+    val city: String,
+    val address: String,
+    val region: String,
+    val email: String
 )

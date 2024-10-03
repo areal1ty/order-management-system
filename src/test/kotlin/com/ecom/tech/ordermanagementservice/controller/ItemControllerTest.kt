@@ -1,13 +1,7 @@
 package com.ecom.tech.ordermanagementservice.controller
 
-import com.ecom.tech.ordermanagementservice.model.dto.DeliveryDTO
 import com.ecom.tech.ordermanagementservice.model.dto.ItemDTO
 import com.ecom.tech.ordermanagementservice.model.dto.OrderDTO
-import com.ecom.tech.ordermanagementservice.model.dto.PaymentDTO
-import com.ecom.tech.ordermanagementservice.model.entity.Order
-import com.ecom.tech.ordermanagementservice.model.entity.status.OrderStatus
-import com.ecom.tech.ordermanagementservice.model.entity.status.PaymentStatus
-import com.ecom.tech.ordermanagementservice.model.mapper.OrderDtoMapper
 import com.ecom.tech.ordermanagementservice.service.ItemService
 import com.ecom.tech.ordermanagementservice.service.OrderService
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -32,6 +26,9 @@ class ItemControllerTest {
     private lateinit var itemService: ItemService
 
     @MockBean
+    private lateinit var itemController: ItemController
+
+    @MockBean
     private lateinit var orderService: OrderService
 
     @Autowired
@@ -39,49 +36,26 @@ class ItemControllerTest {
 
     private lateinit var sampleItemDto: ItemDTO
     private lateinit var sampleOrderDto: OrderDTO
-    private lateinit var sampleOrder: Order
 
     @BeforeEach
     fun setUp() {
-        sampleOrderDto = OrderDTO(
-            orderUid = "sample-order-uid",
-            trackNumber = "123456789",
-            entry = "Sample Entry",
-            delivery = DeliveryDTO("Test Delivery", "123", "Test City", "Test Address", "Region", "Zip", "Email"),
-            payment = PaymentDTO(
-                transaction = "TestTransaction",
-                currency = "USD",
-                provider = "TestProvider",
-                amount = 500,
-                paymentDt = 123456789L,
-                bank = "TestBank",
-                deliveryCost = 50,
-                goodsTotal = 450,
-                customFee = 0,
-                status = PaymentStatus.NEW
-            ),
-            items = listOf(),
-            deliveryService = "Sample Delivery Service",
-            dateCreated = "2023-12-01",
-            status = OrderStatus.NEW
-        )
-
-        sampleOrder = OrderDtoMapper.toEntity(sampleOrderDto)
-
         sampleItemDto = ItemDTO(
             id = 1L,
-            chrtId = 1001,
-            trackNumber = "Track123",
-            price = 200,
-            rid = "RID123",
-            name = "Sample Item",
-            sale = 0,
-            size = "L",
-            totalPrice = 200,
-            nmId = 10001,
-            brand = "BrandName",
-            orderUid = "sample-order-uid"
+            chrtId = 123,
+            trackNumber = "TRK12345678",
+            price = 100,
+            rid = "RID12345",
+            name = "Test Item",
+            sale = 10,
+            size = "M",
+            totalPrice = 90,
+            nmId = 456,
+            brand = "Test Brand",
+            status = "NEW",
+            orderId = 1L
         )
+
+        itemController.createItem(sampleItemDto)
     }
 
     @Test
