@@ -11,6 +11,7 @@
     <groupId>com.ecom.tech</groupId>
     <artifactId>OrderManagementService</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>OrderManagementService</name>
     <description>OrderManagementService</description>
     <url/>
@@ -20,6 +21,11 @@
     <developers>
         <developer/>
     </developers>
+    <modules>
+        <module>PaymentManagementService</module>
+        <module>DeliveryManagementService</module>
+        <module>ItemManagementService</module>
+    </modules>
     <scm>
         <connection/>
         <developerConnection/>

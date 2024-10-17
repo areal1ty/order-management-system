@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 @Component
 class DataCleanUpScheduler(private val orderService: OrderService) {
 
-    @Scheduled(cron = "0 0 0 * * MON") // Каждый понедельник в полночь
+    @Scheduled(cron = "0 0 0 * * MON")
     fun cleanOldOrders() {
         orderService.cleanUp()
     }
