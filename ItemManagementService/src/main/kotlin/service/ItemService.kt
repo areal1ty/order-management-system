@@ -1,4 +1,4 @@
-package com.ecom.tech.ordermanagementservice.service
+package main.kotlin.service
 
 import com.ecom.tech.ordermanagementservice.exception.item.ItemNotFoundException
 import com.ecom.tech.ordermanagementservice.model.dto.ItemDTO

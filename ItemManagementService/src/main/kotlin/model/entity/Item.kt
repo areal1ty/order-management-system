@@ -1,4 +1,4 @@
-package com.ecom.tech.ordermanagementservice.model.entity
+package main.kotlin.model.entity
 
 import jakarta.persistence.*
 

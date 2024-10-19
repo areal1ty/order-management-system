@@ -1,4 +1,4 @@
-package com.ecom.tech.ordermanagementservice.model.dto
+package main.kotlin.model.dto
 
 data class ItemDTO (
     val id: Long,

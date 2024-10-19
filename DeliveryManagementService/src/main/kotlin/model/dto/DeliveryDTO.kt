@@ -1,4 +1,4 @@
-package com.ecom.tech.ordermanagementservice.model.dto
+package model.dto
 
 data class DeliveryDTO(
     val id: Long,

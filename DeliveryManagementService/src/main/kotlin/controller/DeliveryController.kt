@@ -1,6 +1,6 @@
 package com.ecom.tech.ordermanagementservice.controller
 
-import com.ecom.tech.ordermanagementservice.model.dto.DeliveryDTO
+import model.dto.DeliveryDTO
 import com.ecom.tech.ordermanagementservice.service.DeliveryService
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller

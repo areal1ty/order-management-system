@@ -1,4 +1,4 @@
-package com.ecom.tech.ordermanagementservice.model.mapper
+package main.kotlin.model.mapper
 
 import com.ecom.tech.ordermanagementservice.model.dto.ItemDTO
 import com.ecom.tech.ordermanagementservice.model.entity.Item
